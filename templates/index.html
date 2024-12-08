@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediator Service</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 15px;
+            flex: 1 1 calc(30% - 20px); /* Adjust card width */
+            box-sizing: border-box;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card h3 {
+            margin: 0 0 10px;
+            color: #4CAF50;
+        }
+        .card p {
+            margin: 5px 0;
+        }
+        .result, .error {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .result {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .card img {
+            max-width: 100%;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mediator Service</h1>
+        <div class="form-group">
+            <label for="remoteServiceUrl">Remote Service URL:</label>
+            <input type="text" id="remoteServiceUrl" placeholder="Enter remote service URL">
+        </div>
+        <button id="connectButton">Connect</button>
+        <div class="status" id="connectionStatus"></div>
+
+        <form id="bookingForm">
+            <h2>Booking Details</h2>
+            <div class="form-group">
+                <label for="bookerName">Booker Name:</label>
+                <input type="text" id="bookerName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="requiredPlaces">Required Places:</label>
+                <input type="number" id="requiredPlaces" placeholder="Enter number of places">
+            </div>
+            <div class="form-group">
+                <label for="requiredBedrooms">Required Bedrooms:</label>
+                <input type="number" id="requiredBedrooms" placeholder="Enter number of bedrooms">
+            </div>
+            <div class="form-group">
+                <label for="maxDistanceToLake">Max Distance to Lake (meters):</label>
+                <input type="number" id="maxDistanceToLake" placeholder="Enter max distance to lake">
+            </div>
+            <div class="form-group">
+                <label for="nearestCity">Nearest City:</label>
+                <input type="text" id="nearestCity" placeholder="Enter nearest city">
+            </div>
+            <div class="form-group">
+                <label for="maxDistanceToCity">Max Distance to City (meters):</label>
+                <input type="number" id="maxDistanceToCity" placeholder="Enter max distance to city">
+            </div>
+            <div class="form-group">
+                <label for="requiredDays">Required Days:</label>
+                <input type="number" id="requiredDays" placeholder="Enter number of days">
+            </div>
+            <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate">
+            </div>
+            <div class="form-group">
+                <label for="maxShiftDays">Max Shift Days:</label>
+                <input type="number" id="maxShiftDays" placeholder="Enter max shift days">
+            </div>
+            <button type="submit">Book Cottage</button>
+        </form>
+
+        <div class="result" id="result"></div>
+        <div class="error" id="error"></div>
+
+        <div class="suggestions" id="suggestionsContainer">
+            <!-- Booking suggestions will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Connect to Remote Service
+        document.getElementById('connectButton').addEventListener('click', async function() {
+            const remoteServiceUrl = document.getElementById('remoteServiceUrl').value;
+
+            // Clear previous connection status
+            document.getElementById('connectionStatus').innerText = '';
+
+            // Send request to check connection
+            try {
+                const response = await fetch('http://127.0.0.1:5000/get_rdg', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ remote_service_url: remoteServiceUrl })
+                });
+
+                if (response.ok) {
+                    const responseData = await response.text();
+                    console.log('Connected successfully!', responseData); // Log success response to console
+                    document.getElementById('connectionStatus').innerText = 'Connected successfully!';
+                } else {
+                    const errorText = await response.text();
+                    console.error('Connection failed:', errorText); // Log error response to console
+                    document.getElementById('connectionStatus').innerText = 'Connection failed: ' + errorText;
+                }
+            } catch (error) {
+                console.error('Error:', error.message); // Log error message to console
+                document.getElementById('connectionStatus').innerText = 'Error: ' + error.message;
+            }
+        });
+
+        // Handle Booking Form Submission
+        document.getElementById('bookingForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Clear previous results
+            document.getElementById('result').innerText = '';
+            document.getElementById('error').innerText = '';
+            document.getElementById('suggestionsContainer').innerHTML = ''; // Clear previous suggestions
+
+            // Gather input data and convert to appropriate types
+            const bookerName = document.getElementById('bookerName').value;
+            const requiredPlaces = Number(document.getElementById('requiredPlaces').value); // Convert to number
+            const requiredBedrooms = Number(document.getElementById('requiredBedrooms').value); // Convert to number
+            const maxDistanceToLake = Number(document.getElementById('maxDistanceToLake').value); // Convert to number
+            const nearestCity = document.getElementById('nearestCity').value;
+            const maxDistanceToCity = Number(document.getElementById('maxDistanceToCity').value); // Convert to number
+            const requiredDays = Number(document.getElementById('requiredDays').value); // Convert to number
+            const startDate = document.getElementById('startDate').value;
+            const maxShiftDays = Number(document.getElementById('maxShiftDays').value); // Convert to number
+
+            // Prepare the request payload without the remote service URL
+            const payload = {
+                bookerName: bookerName,
+                requiredPlaces: requiredPlaces,
+                requiredBedrooms: requiredBedrooms,
+                maxDistanceToLake: maxDistanceToLake,
+                nearestCity: nearestCity,
+                maxDistanceToCity: maxDistanceToCity,
+                requiredDays: requiredDays,
+                startDate: startDate,
+                maxShiftDays: maxShiftDays
+            };
+
+            console.log('Payload being sent:', payload); // Log the payload
+
+            // Send request to the booking API
+            try {
+                const response = await fetch('http://127.0.0.1:5000/book_cottage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Booking failed:', errorText); // Log error response to console
+                    document.getElementById('error').innerText = errorText;
+                    return;
+                }
+
+                const data = await response.json(); // Assuming the response is in JSON format
+                console.log('Booking successful:', data); // Log success response to console
+
+                // Check if response contains suggestions
+                if (data.response && Array.isArray(data.response)) {
+                    // Display suggestions in cards
+                    data.response.forEach(suggestion => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.innerHTML = `
+                            <img src="${suggestion.cottageImage}" alt="${suggestion.cottageName}">
+                            <h3>${suggestion.cottageName}</h3>
+                            <p><strong>Booker:</strong> ${suggestion.bookerName}</p>
+                            <p><strong>Address:</strong> ${suggestion.cottageAddress}</p>
+                            <p><strong>Booking Number:</strong> ${suggestion.bookingNumber}</p>
+                            <p><strong>Booking Dates:</strong> ${suggestion.bookingStartDate} to ${suggestion.bookingEndDate}</p>
+                            <p><strong>Actual Bedrooms:</strong> ${suggestion.actualBedrooms}</p>
+                            <p><strong>Actual Places:</strong> ${suggestion.actualPlaces}</p>
+                            <p><strong>Nearest City:</strong> ${suggestion.nearestCity}</p>
+                            <p><strong>Distance to Lake:</strong> ${suggestion.distanceToLake}</p>
+                            <p><strong>Distance to City:</strong> ${suggestion.distanceToCity}</p>
+                        `;
+                        document.getElementById('suggestionsContainer').appendChild(card);
+                    });
+                } else {
+                    document.getElementById('error').innerText = 'No suggestions available.';
+                }
+            } catch (error) {
+                console.error('Error:', error.message); // Log error message to console
+                document.getElementById('error').innerText = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

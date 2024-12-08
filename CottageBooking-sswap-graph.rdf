@@ -1,0 +1,129 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sswap: <http://sswapmeet.sswap.info/sswap/> .
+@prefix cottage: <http://localhost:8080/CottageBookingService/ontology#> .
+@prefix resource: <http://localhost:8080/CottageBookingService/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://localhost:8080/CottageBookingService/ontology#> .
+
+resource:CottageBookingService
+    rdf:type sswap:Resource, :CottageBookingService ;
+    sswap:providedBy resource:resourceProvider ;
+    sswap:name "Cottage Booking Service" ;
+    sswap:oneLineDescription "A service that accepts booking parameters and returns cottages that meet these requirements" ;
+    sswap:operatesOn [
+        rdf:type sswap:Graph ;
+        sswap:hasMapping [
+            rdf:type sswap:Subject, :Booking ;
+            cottage:bookerName ""^^xsd:string ;
+            cottage:requiredPlaces ""^^xsd:integer ;
+            cottage:requiredBedrooms ""^^xsd:integer ;
+            cottage:maxDistanceToLake ""^^xsd:integer ;
+            cottage:nearestCity :City ;
+            cottage:maxDistanceToCity ""^^xsd:integer ;
+            cottage:requiredDays ""^^xsd:integer ;
+            cottage:startDate ""^^xsd:date ;
+            cottage:maxShiftDays ""^^xsd:integer ;
+            sswap:mapsTo [
+                rdf:type sswap:Object, :CottageSuggestion ;
+            ]
+        ]
+    ] .
+
+
+### RIG: Resource Invocation Graph with Actual Input Values
+
+resource:CottageBookingService
+    rdf:type sswap:Resource, :CottageBookingService ;
+    sswap:providedBy resource:resourceProvider ;
+    sswap:name "Cottage Booking Service" ;
+    sswap:oneLineDescription "A service that accepts booking parameters and returns cottages that meet these requirements" ;
+    sswap:operatesOn [
+        rdf:type sswap:Graph ;
+        sswap:hasMapping [
+            rdf:type sswap:Subject, :Booking ;
+            cottage:bookerName "Raufur"^^xsd:string ;
+            cottage:requiredPlaces "4"^^xsd:integer ;
+            cottage:requiredBedrooms "2"^^xsd:integer ;
+            cottage:maxDistanceToLake "500"^^xsd:integer ;
+            cottage:nearestCity :City_Tampere ;
+            cottage:maxDistanceToCity "50"^^xsd:integer ;
+            cottage:requiredDays "2"^^xsd:integer ;
+            cottage:startDate "2024-11-11"^^xsd:date ;
+            cottage:maxShiftDays "1"^^xsd:integer ;
+            sswap:mapsTo [
+                rdf:type sswap:Object, :CottageSuggestion ;
+            ]
+        ]
+    ] .
+
+### RRG: Resource Response Graph with Multiple Booking Suggestions for "Forest Retreat"
+
+resource:CottageBookingService
+    rdf:type sswap:Resource, :CottageBookingService ;
+    sswap:providedBy resource:resourceProvider ;
+    sswap:name "Cottage Booking Service" ;
+    sswap:oneLineDescription "A service that accepts booking parameters and returns cottages that meet these requirements" ;
+    sswap:operatesOn [
+        rdf:type sswap:Graph ;
+        sswap:hasMapping [
+            rdf:type sswap:Subject, :Booking ;
+            cottage:bookerName "Raufur"^^xsd:string ;
+            cottage:requiredPlaces "4"^^xsd:integer ;
+            cottage:requiredBedrooms "2"^^xsd:integer ;
+            cottage:maxDistanceToLake "500"^^xsd:integer ;
+            cottage:nearestCity :City_Tampere ;
+            cottage:maxDistanceToCity "50"^^xsd:integer ;
+            cottage:requiredDays "2"^^xsd:integer ;
+            cottage:startDate "2024-11-11"^^xsd:date ;
+            cottage:maxShiftDays "1"^^xsd:integer ;
+            
+            # First Booking Instance
+            sswap:mapsTo [
+                rdf:type sswap:Object, :CottageSuggestion ;
+                cottage:bookingNumber "efe501fc-1fc8-4660-9b11-7cbbd4a7818d"^^xsd:string ;
+                cottage:cottageName "Forest Retreat"^^xsd:string ;
+                cottage:cottageAddress "456 Forest Lane, Tampere"^^xsd:string ;
+                cottage:cottageImage "https://s3.brilliant.com.bd/images/Forest%20Retreat.jpg"^^xsd:anyURI ;
+                cottage:actualPlaces "4"^^xsd:integer ;
+                cottage:actualBedrooms "2"^^xsd:integer ;
+                cottage:actualDistanceToLake "500"^^xsd:integer ;
+                cottage:nearestCity :City_Tampere ;
+                cottage:distanceToCity "30"^^xsd:integer ;
+                cottage:bookingStartDate "2024-11-10"^^xsd:date ;
+                cottage:bookingEndDate "2024-11-12"^^xsd:date
+            ] ;
+            
+            # Second Booking Instance
+            sswap:mapsTo [
+                rdf:type sswap:Object, :CottageSuggestion ;
+                cottage:bookingNumber "52878830-1da6-402d-adbc-de1a2ebb42b9"^^xsd:string ;
+                cottage:cottageName "Forest Retreat"^^xsd:string ;
+                cottage:cottageAddress "456 Forest Lane, Tampere"^^xsd:string ;
+                cottage:cottageImage "https://s3.brilliant.com.bd/images/Forest%20Retreat.jpg"^^xsd:anyURI ;
+                cottage:actualPlaces "4"^^xsd:integer ;
+                cottage:actualBedrooms "2"^^xsd:integer ;
+                cottage:actualDistanceToLake "500"^^xsd:integer ;
+                cottage:nearestCity :City_Tampere ;
+                cottage:distanceToCity "30"^^xsd:integer ;
+                cottage:bookingStartDate "2024-11-11"^^xsd:date ;
+                cottage:bookingEndDate "2024-11-13"^^xsd:date
+            ] ;
+    
+            # Third Booking Instance
+            sswap:mapsTo [
+                rdf:type sswap:Object, :CottageSuggestion ;
+                cottage:bookingNumber "de49baac-fb93-4625-89f6-cc8b8fcfbdbb"^^xsd:string ;
+                cottage:cottageName "Forest Retreat"^^xsd:string ;
+                cottage:cottageAddress "456 Forest Lane, Tampere"^^xsd:string ;
+                cottage:cottageImage "https://s3.brilliant.com.bd/images/Forest%20Retreat.jpg"^^xsd:anyURI ;
+                cottage:actualPlaces "4"^^xsd:integer ;
+                cottage:actualBedrooms "2"^^xsd:integer ;
+                cottage:actualDistanceToLake "500"^^xsd:integer ;
+                cottage:nearestCity :City_Tampere ;
+                cottage:distanceToCity "30"^^xsd:integer ;
+                cottage:bookingStartDate "2024-11-12"^^xsd:date ;
+                cottage:bookingEndDate "2024-11-14"^^xsd:date
+            ]
+        ]
+    ] .

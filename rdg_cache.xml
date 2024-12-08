@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ns0="http://sswapmeet.sswap.info/sswap/"
+   xmlns:ns1="http://localhost:8080/CottageBookingService/ontology#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:nodeID="N881051cdbf5641f696d1de0b4e9c5252">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Subject"/>
+    <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+    <ns1:bookerName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:bookerName>
+    <ns1:requiredPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requiredPlaces>
+    <ns1:requiredBedrooms rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requiredBedrooms>
+    <ns1:maxDistanceToLake rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:maxDistanceToLake>
+    <ns1:nearestCity rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:nearestCity>
+    <ns1:maxDistanceToCity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:maxDistanceToCity>
+    <ns1:requiredDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requiredDays>
+    <ns1:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></ns1:startDate>
+    <ns1:maxShiftDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:maxShiftDays>
+    <ns0:mapsTo rdf:nodeID="Nb597db609dc144a3a71abe4bb53a73fd"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8080/CottageBookingService/CottageBookingService">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Resource"/>
+    <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#CottageBookingServiceType"/>
+    <ns0:providedBy rdf:resource="http://localhost:8080/CottageBookingService/resourceProvider"/>
+    <ns0:name>Cottage Booking Service</ns0:name>
+    <ns0:oneLineDescription>A service that accepts booking parameters and returns cottages that meet these requirements.</ns0:oneLineDescription>
+    <ns0:operatesOn rdf:nodeID="N22dbddaa7a95410abf96a92df1946f45"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N22dbddaa7a95410abf96a92df1946f45">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Graph"/>
+    <ns0:hasMapping rdf:nodeID="N881051cdbf5641f696d1de0b4e9c5252"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb597db609dc144a3a71abe4bb53a73fd">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Object"/>
+    <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#CottageSuggestion"/>
+  </rdf:Description>
+</rdf:RDF>

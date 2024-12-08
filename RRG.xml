@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:ns0="http://sswapmeet.sswap.info/sswap/"
+         xmlns:ns1="http://localhost:8080/CottageBookingService/ontology#">
+
+  <rdf:Description rdf:about="http://localhost:8080/CottageBookingService/CottageBookingService">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Resource"/>
+    <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#CottageBookingService"/>
+    <ns0:providedBy rdf:resource="http://localhost:8080/CottageBookingService/resourceProvider"/>
+    <ns0:name>Cottage Booking Service</ns0:name>
+    <ns0:oneLineDescription>A service that accepts booking parameters and returns cottages that meet these requirements</ns0:oneLineDescription>
+    <ns0:operatesOn>
+      <ns0:Graph>
+        <ns0:hasMapping>
+          <ns0:Subject>
+            <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+            <ns1:bookerName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Raufur</ns1:bookerName>
+            <ns1:requiredPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</ns1:requiredPlaces>
+            <ns1:requiredBedrooms rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ns1:requiredBedrooms>
+            <ns1:maxDistanceToLake rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</ns1:maxDistanceToLake>
+            <ns1:nearestCity rdf:resource="http://localhost:8080/CottageBookingService/ontology#City_Tampere"/>
+            <ns1:maxDistanceToCity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</ns1:maxDistanceToCity>
+            <ns1:requiredDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ns1:requiredDays>
+            <ns1:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-11-11</ns1:startDate>
+            <ns1:maxShiftDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ns1:maxShiftDays>
+            <ns0:mapsTo>
+              <ns0:Object>
+                <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#CottageSuggestion"/>
+                <ns1:bookingNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">efe501fc-1fc8-4660-9b11-7cbbd4a7818d</ns1:bookingNumber>
+                <ns1:cottageName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Forest Retreat</ns1:cottageName>
+                <ns1:cottageAddress rdf:datatype="http://www.w3.org/2001/XMLSchema#string">456 Forest Lane, Tampere</ns1:cottageAddress>
+                <ns1:cottageImage rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://s3.brilliant.com.bd/images/Forest%20Retreat.jpg</ns1:cottageImage>
+                <ns1:actualPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</ns1:actualPlaces>
+                <ns1:actualBedrooms rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ns1:actualBedrooms>
+                <ns1:actualDistanceToLake rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</ns1:actualDistanceToLake>
+                <ns1:nearestCity rdf:resource="http://localhost:8080/CottageBookingService/ontology#City_Tampere"/>
+                <ns1:distanceToCity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</ns1:distanceToCity>
+                <ns1:bookingStartDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-11-10</ns1:bookingStartDate>
+                <ns1:bookingEndDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-11-12</ns1:bookingEndDate>
+              </ns0:Object>
+            </ns0:mapsTo>
+
+          </ns0:Subject>
+        </ns0:hasMapping>
+
+      </ns0:Graph>
+    </ns0:operatesOn>
+
+  </rdf:Description>
+
+</rdf:RDF>

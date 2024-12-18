@@ -4,7 +4,15 @@
    xmlns:ns1="http://localhost:8080/CottageBookingService/ontology#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <rdf:Description rdf:nodeID="N881051cdbf5641f696d1de0b4e9c5252">
+  <rdf:Description rdf:about="http://localhost:8080/CottageBookingService/CottageBookingService">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Resource"/>
+    <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#CottageBookingServiceType"/>
+    <ns0:providedBy rdf:resource="http://localhost:8080/CottageBookingService/resourceProvider"/>
+    <ns0:name>Cottage Booking Service</ns0:name>
+    <ns0:oneLineDescription>A service that accepts booking parameters and returns cottages that meet these requirements.</ns0:oneLineDescription>
+    <ns0:operatesOn rdf:nodeID="Nf8dbe2c456064642831b3bfa0366d7ca"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9b186c660b9a4c51aec08656e6165bc5">
     <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Subject"/>
     <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
     <ns1:bookerName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:bookerName>
@@ -16,22 +24,14 @@
     <ns1:requiredDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requiredDays>
     <ns1:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></ns1:startDate>
     <ns1:maxShiftDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:maxShiftDays>
-    <ns0:mapsTo rdf:nodeID="Nb597db609dc144a3a71abe4bb53a73fd"/>
+    <ns0:mapsTo rdf:nodeID="N54024249a4864f68b9b07a8f4f90217e"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://localhost:8080/CottageBookingService/CottageBookingService">
-    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Resource"/>
-    <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#CottageBookingServiceType"/>
-    <ns0:providedBy rdf:resource="http://localhost:8080/CottageBookingService/resourceProvider"/>
-    <ns0:name>Cottage Booking Service</ns0:name>
-    <ns0:oneLineDescription>A service that accepts booking parameters and returns cottages that meet these requirements.</ns0:oneLineDescription>
-    <ns0:operatesOn rdf:nodeID="N22dbddaa7a95410abf96a92df1946f45"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N22dbddaa7a95410abf96a92df1946f45">
-    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Graph"/>
-    <ns0:hasMapping rdf:nodeID="N881051cdbf5641f696d1de0b4e9c5252"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Nb597db609dc144a3a71abe4bb53a73fd">
+  <rdf:Description rdf:nodeID="N54024249a4864f68b9b07a8f4f90217e">
     <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Object"/>
     <rdf:type rdf:resource="http://localhost:8080/CottageBookingService/ontology#CottageSuggestion"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf8dbe2c456064642831b3bfa0366d7ca">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Graph"/>
+    <ns0:hasMapping rdf:nodeID="N9b186c660b9a4c51aec08656e6165bc5"/>
   </rdf:Description>
 </rdf:RDF>

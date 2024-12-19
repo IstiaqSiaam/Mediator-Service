@@ -27,7 +27,7 @@ def home():
 def get_rdg():
     input_data = request.json
     remote_service_url = input_data.get('remote_service_url')
-    alignment_method = input_data.get('alignment_method', 'combined')  # 'custom', 'api', or 'combined'
+    alignment_method = input_data.get('alignment_method', 'custom')  # 'custom', 'api', or 'combined'
 
     if not remote_service_url:
         return Response("<e>remote_service_url is required<e>", status=400, mimetype='application/xml')
@@ -41,40 +41,24 @@ def get_rdg():
         service_id = get_service_id(remote_service_url)
         logger.debug(f"Service ID: {service_id}")
         
-        # Check if we already have alignment for this service
-        alignment = aligner.load_alignment(service_id)
-        logger.debug(f"Loaded alignment: {alignment is not None}")
+        # Create new alignment using specified method
+        alignment = aligner.align_ontologies(
+            rdg_response.content,
+            open('reference_ontology.rdf', 'rb').read(),
+            method=alignment_method
+        )
+        logger.debug(f"New alignment created with {len(alignment) if alignment else 0} mappings")
         
-        if not alignment:
-            logger.debug("Creating new alignment...")
-            # Create new alignment using specified method
-            alignment = aligner.align_ontologies(
-                rdg_response.content,
-                open('reference_ontology.rdf', 'rb').read(),
-                method=alignment_method
-            )
-            logger.debug(f"New alignment created with {len(alignment) if alignment else 0} mappings")
-            aligner.save_alignment(service_id, alignment)
-            
-            # If any alignments need confirmation, return them
-            needs_confirmation = [a for a in alignment if a['needs_confirmation']]
-            if needs_confirmation:
-                return jsonify({
-                    'status': 'needs_confirmation',
-                    'alignments': needs_confirmation,
-                    'service_id': service_id
-                })
+        # Return all alignments with their confidence scores
+        return jsonify({
+            'status': 'success',
+            'alignments': alignment
+        })
         
-        rdg_content = rdg_response.content.decode('utf-8')
-        if not rdg_content.strip():
-            return Response("<e>Received empty response from the remote service.<e>", status=500, mimetype='application/xml')
-
-        with open(RDG_FILE, 'wb') as file:
-            file.write(rdg_response.content)
-
-        return Response(rdg_response.content, status=rdg_response.status_code, mimetype='application/xml')
     except requests.exceptions.RequestException as e:
-        return Response(f"<e>{str(e)}<e>", status=500, mimetype='application/xml')
+        error_msg = f"Error fetching RDG: {str(e)}"
+        logger.error(error_msg)
+        return Response(f"<e>{error_msg}</e>", status=500, mimetype='application/xml')
 
 @app.route('/confirm_alignment', methods=['POST'])
 def confirm_alignment():

@@ -183,16 +183,27 @@
                 });
 
                 if (response.ok) {
-                    const responseData = await response.text();
-                    console.log('Connected successfully!', responseData); // Log success response to console
+                    const data = await response.json();
+                    console.log('Alignments:', data.alignments); // Log alignments to console
                     document.getElementById('connectionStatus').innerText = 'Connected successfully!';
+                    
+                    // Display alignments in console in a readable format
+                    data.alignments.forEach(alignment => {
+                        console.log(`Alignment:
+                            Source: ${alignment.source_uri}
+                            Target: ${alignment.target_uri}
+                            Type: ${alignment.type}
+                            Confidence: ${alignment.confidence}
+                            Needs Confirmation: ${alignment.needs_confirmation}
+                        `);
+                    });
                 } else {
                     const errorText = await response.text();
-                    console.error('Connection failed:', errorText); // Log error response to console
+                    console.error('Connection failed:', errorText);
                     document.getElementById('connectionStatus').innerText = 'Connection failed: ' + errorText;
                 }
             } catch (error) {
-                console.error('Error:', error.message); // Log error message to console
+                console.error('Error:', error.message);
                 document.getElementById('connectionStatus').innerText = 'Error: ' + error.message;
             }
         });
@@ -244,7 +255,7 @@
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('Booking failed:', errorText); // Log error response to console
+                    console.error('Booking failed:', errorText);
                     document.getElementById('error').innerText = errorText;
                     return;
                 }
@@ -277,7 +288,7 @@
                     document.getElementById('error').innerText = 'No suggestions available.';
                 }
             } catch (error) {
-                console.error('Error:', error.message); // Log error message to console
+                console.error('Error:', error.message);
                 document.getElementById('error').innerText = 'Error: ' + error.message;
             }
         });

@@ -4,15 +4,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:sswap="http://sswapmeet.sswap.info/sswap/"
 >
-  <rdf:Description rdf:about="http://example.org/cottage-booking/getCottages">
-    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Resource"/>
-    <rdf:type rdf:resource="http://example.org/cottage-booking/Cottage"/>
-    <sswap:providedBy rdf:resource="http://example.org/cottage-booking/resourceProvider"/>
-    <sswap:name>Cottage Booking Service</sswap:name>
-    <sswap:oneLineDescription>A service that accepts booking criteria and returns available cottages.</sswap:oneLineDescription>
-    <sswap:operatesOn rdf:nodeID="n4575e2aa60a4436e863a4143f3b0aea1b1"/>
+  <rdf:Description rdf:nodeID="n12865856cddd44abbf966b53920b954fb1">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Graph"/>
+    <sswap:hasMapping rdf:nodeID="n12865856cddd44abbf966b53920b954fb2"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="n4575e2aa60a4436e863a4143f3b0aea1b3">
+  <rdf:Description rdf:nodeID="n12865856cddd44abbf966b53920b954fb3">
     <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Object"/>
     <rdf:type rdf:resource="http://example.org/cottage-booking#BookingResponse"/>
     <cb:bookingNumber></cb:bookingNumber>
@@ -27,7 +23,15 @@
     <cb:lakeDistance rdf:datatype="http://www.w3.org/2001/XMLSchema#float"></cb:lakeDistance>
     <cb:cityDistance rdf:datatype="http://www.w3.org/2001/XMLSchema#float"></cb:cityDistance>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="n4575e2aa60a4436e863a4143f3b0aea1b2">
+  <rdf:Description rdf:about="http://example.org/cottage-booking/getCottages">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Resource"/>
+    <rdf:type rdf:resource="http://example.org/cottage-booking/Cottage"/>
+    <sswap:providedBy rdf:resource="http://example.org/cottage-booking/resourceProvider"/>
+    <sswap:name>Cottage Booking Service</sswap:name>
+    <sswap:oneLineDescription>A service that accepts booking criteria and returns available cottages.</sswap:oneLineDescription>
+    <sswap:operatesOn rdf:nodeID="n12865856cddd44abbf966b53920b954fb1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n12865856cddd44abbf966b53920b954fb2">
     <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Subject"/>
     <rdf:type rdf:resource="http://example.org/cottage-booking#BookingRequest"/>
     <cb:bookerName></cb:bookerName>
@@ -39,10 +43,6 @@
     <cb:numberOfDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></cb:numberOfDays>
     <cb:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></cb:startDate>
     <cb:maxDateShift rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></cb:maxDateShift>
-    <sswap:mapsTo rdf:nodeID="n4575e2aa60a4436e863a4143f3b0aea1b3"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="n4575e2aa60a4436e863a4143f3b0aea1b1">
-    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Graph"/>
-    <sswap:hasMapping rdf:nodeID="n4575e2aa60a4436e863a4143f3b0aea1b2"/>
+    <sswap:mapsTo rdf:nodeID="n12865856cddd44abbf966b53920b954fb3"/>
   </rdf:Description>
 </rdf:RDF>

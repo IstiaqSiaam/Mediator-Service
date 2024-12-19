@@ -5,3 +5,5 @@ rdflib
 numpy
 textdistance
 nltk
+python-Levenshtein
+rdflib-jsonld

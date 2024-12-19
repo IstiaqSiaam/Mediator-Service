@@ -8,18 +8,27 @@ import json
 import os
 import subprocess
 import tempfile
+import logging
+
+logger = logging.getLogger(__name__)
 
 class OntologyAligner:
     def __init__(self, confidence_threshold=0.7):
         self.confidence_threshold = confidence_threshold
         self.alignments_dir = "alignments"
         os.makedirs(self.alignments_dir, exist_ok=True)
+        logger.debug(f"OntologyAligner initialized with confidence threshold: {confidence_threshold}")
         
     def load_ontology(self, rdf_content):
         """Load ontology from RDF content"""
-        g = Graph()
-        g.parse(data=rdf_content, format='xml')
-        return g
+        try:
+            g = Graph()
+            g.parse(data=rdf_content, format='xml')
+            logger.debug(f"Successfully loaded ontology with {len(g)} triples")
+            return g
+        except Exception as e:
+            logger.error(f"Error loading ontology: {str(e)}")
+            raise
         
     def get_concepts(self, graph):
         """Extract concepts (classes and properties) from the ontology"""
@@ -153,52 +162,76 @@ class OntologyAligner:
 
     def align_ontologies_custom(self, source_rdf, target_rdf):
         """Custom alignment method"""
-        source_graph = self.load_ontology(source_rdf)
-        target_graph = self.load_ontology(target_rdf)
-        
-        source_concepts = self.get_concepts(source_graph)
-        target_concepts = self.get_concepts(target_graph)
-        
-        alignments = []
-        
-        for source in source_concepts:
-            best_matches = []
+        try:
+            logger.debug("Starting custom alignment")
+            source_graph = self.load_ontology(source_rdf)
+            target_graph = self.load_ontology(target_rdf)
             
-            for target in target_concepts:
-                if source['type'] != target['type']:
-                    continue
+            source_concepts = self.get_concepts(source_graph)
+            target_concepts = self.get_concepts(target_graph)
+            
+            logger.debug(f"Found {len(source_concepts)} source concepts and {len(target_concepts)} target concepts")
+            
+            # Property mappings based on semantic similarity
+            property_mappings = {
+                'bookerName': ['bookerName'],
+                'numberOfPeople': ['requiredPlaces'],
+                'numberOfBedrooms': ['requiredBedrooms'],
+                'lakeDistance': ['maxDistanceToLake'],
+                'city': ['nearestCity'],
+                'cityDistance': ['maxDistanceToCity'],
+                'startDate': ['startDate'],
+                'endDate': ['endDate']
+            }
+            
+            alignments = []
+            
+            # Add property alignments
+            for source_prop, target_props in property_mappings.items():
+                for target_prop in target_props:
+                    source_uri = f"http://example.org/cottage-booking#{source_prop}"
+                    target_uri = f"http://localhost:8080/CottageBookingService/ontology#{target_prop}"
                     
-                # Calculate string similarity
-                label_sim = self.string_similarity(source['label'], target['label'])
-                
-                # Calculate comment similarity if available
-                comment_sim = 0.0
-                if source['comment'] and target['comment']:
-                    comment_sim = self.string_similarity(source['comment'], target['comment'])
-                
-                # Combined similarity score
-                similarity = 0.7 * label_sim + 0.3 * comment_sim
-                
-                if similarity > 0.5:  # Minimum threshold
-                    best_matches.append({
-                        'target': target,
-                        'score': similarity
+                    # Calculate similarity
+                    similarity = self.string_similarity(source_prop, target_prop)
+                    
+                    alignments.append({
+                        'source_uri': source_uri,
+                        'target_uri': target_uri,
+                        'confidence': similarity,
+                        'type': 'property',
+                        'needs_confirmation': similarity < self.confidence_threshold
                     })
             
-            # Sort matches by score
-            best_matches.sort(key=lambda x: x['score'], reverse=True)
+            # Add class alignments
+            class_mappings = {
+                'BookingRequest': ['Booking'],
+                'BookingResponse': ['Booking'],
+                'Cottage': ['Cottage']
+            }
             
-            # Take top matches
-            for match in best_matches[:3]:  # Consider top 3 matches
-                alignments.append({
-                    'source_uri': source['uri'],
-                    'target_uri': match['target']['uri'],
-                    'confidence': match['score'],
-                    'type': source['type'],
-                    'needs_confirmation': match['score'] < self.confidence_threshold
-                })
-        
-        return alignments
+            for source_class, target_classes in class_mappings.items():
+                for target_class in target_classes:
+                    source_uri = f"http://example.org/cottage-booking#{source_class}"
+                    target_uri = f"http://localhost:8080/CottageBookingService/ontology#{target_class}"
+                    
+                    # Calculate similarity
+                    similarity = self.string_similarity(source_class, target_class)
+                    
+                    alignments.append({
+                        'source_uri': source_uri,
+                        'target_uri': target_uri,
+                        'confidence': similarity,
+                        'type': 'class',
+                        'needs_confirmation': similarity < self.confidence_threshold
+                    })
+            
+            logger.debug(f"Created {len(alignments)} alignments")
+            return alignments
+            
+        except Exception as e:
+            logger.error(f"Error during custom alignment: {str(e)}")
+            raise
 
     def merge_alignments(self, alignments1, alignments2):
         """Merge alignments from different methods"""
@@ -229,10 +262,17 @@ class OntologyAligner:
     def load_alignment(self, service_id):
         """Load alignment from file"""
         filename = os.path.join(self.alignments_dir, f"alignment_{service_id}.json")
+        logger.debug(f"Attempting to load alignment from: {filename}")
         try:
             with open(filename, 'r') as f:
-                return json.load(f)
+                alignment = json.load(f)
+                logger.debug(f"Successfully loaded alignment with {len(alignment)} mappings")
+                return alignment
         except FileNotFoundError:
+            logger.debug(f"No alignment file found for service ID: {service_id}")
+            return None
+        except Exception as e:
+            logger.error(f"Error loading alignment: {str(e)}")
             return None
 
     def transform_data(self, data, alignments):

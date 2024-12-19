@@ -4,6 +4,11 @@ import requests
 from utils import get_rig_data, convert_rdf_to_jsonld, extract_suggestions
 from ontology_alignment import OntologyAligner
 import hashlib
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -28,21 +33,27 @@ def get_rdg():
         return Response("<e>remote_service_url is required<e>", status=400, mimetype='application/xml')
 
     try:
+        logger.debug(f"Fetching RDG from: {remote_service_url}")
         rdg_response = requests.get(remote_service_url)
         rdg_response.raise_for_status()
         
         # Get service ID
         service_id = get_service_id(remote_service_url)
+        logger.debug(f"Service ID: {service_id}")
         
         # Check if we already have alignment for this service
         alignment = aligner.load_alignment(service_id)
+        logger.debug(f"Loaded alignment: {alignment is not None}")
+        
         if not alignment:
+            logger.debug("Creating new alignment...")
             # Create new alignment using specified method
             alignment = aligner.align_ontologies(
                 rdg_response.content,
-                open('reference_ontology.rdf').read(),
+                open('reference_ontology.rdf', 'rb').read(),
                 method=alignment_method
             )
+            logger.debug(f"New alignment created with {len(alignment) if alignment else 0} mappings")
             aligner.save_alignment(service_id, alignment)
             
             # If any alignments need confirmation, return them

@@ -1,0 +1,79 @@
+[
+  {
+    "source_uri": "http://example.org/cottage-booking#bookerName",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#bookerName",
+    "confidence": 0.9,
+    "type": "property",
+    "needs_confirmation": false
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#numberOfPeople",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#requiredPlaces",
+    "confidence": 0.3321428571428572,
+    "type": "property",
+    "needs_confirmation": true
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#numberOfBedrooms",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#requiredBedrooms",
+    "confidence": 0.568939393939394,
+    "type": "property",
+    "needs_confirmation": true
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#lakeDistance",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#maxDistanceToLake",
+    "confidence": 0.5418920441739914,
+    "type": "property",
+    "needs_confirmation": true
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#city",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#nearestCity",
+    "confidence": 0.424469696969697,
+    "type": "property",
+    "needs_confirmation": true
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#cityDistance",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#maxDistanceToCity",
+    "confidence": 0.49280200585981515,
+    "type": "property",
+    "needs_confirmation": true
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#startDate",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#startDate",
+    "confidence": 0.9,
+    "type": "property",
+    "needs_confirmation": false
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#endDate",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#endDate",
+    "confidence": 0.9,
+    "type": "property",
+    "needs_confirmation": false
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#BookingRequest",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#Booking",
+    "confidence": 0.625,
+    "type": "class",
+    "needs_confirmation": true
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#BookingResponse",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#Booking",
+    "confidence": 0.603030303030303,
+    "type": "class",
+    "needs_confirmation": true
+  },
+  {
+    "source_uri": "http://example.org/cottage-booking#Cottage",
+    "target_uri": "http://localhost:8080/CottageBookingService/ontology#Cottage",
+    "confidence": 1.0,
+    "type": "class",
+    "needs_confirmation": false
+  }
+]

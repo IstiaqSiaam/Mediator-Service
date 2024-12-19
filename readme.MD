@@ -13,8 +13,6 @@
 ### Steps
 
 1. Clone the repository
-  ```bash
-  git clone https://github.com/sahil-kumar-01/Mediator-Service.git
   ```
 2. Create a virtual environment ad activate it
   ```bash
@@ -29,6 +27,9 @@
  ```bash
  python mediator_service.py
  ```
+ ```bash
+ python fake_remote_service.py
+ ```
 
- 5. Open your browser and go to http://localhost:5000/
+ 5. Open your browser and go to http://localhost:5000/ for the mediator and put http://localhost:5002/CottageBookingService in the remote URL
  

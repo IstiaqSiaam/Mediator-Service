@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:ns0="http://sswapmeet.sswap.info/sswap/"
+         xmlns:ns1="http://localhost:8080/SW_project/cottagebooking#">
+
+  <rdf:Description rdf:about="http://localhost:8080/sswap-servlet/bookingService">
+    <rdf:type rdf:resource="http://sswapmeet.sswap.info/sswap/Resource"/>
+    <rdf:type rdf:resource="http://localhost:8080/SW_project/cottagebooking#BookingService"/>
+    <ns0:providedBy rdf:resource="http://localhost:8080/sswap-servlet/res/resourceProvider"/>
+    <ns0:name>Cottage booking sswap service</ns0:name>
+    <ns0:oneLineDescription>A service that search available cottages</ns0:oneLineDescription>
+    <ns0:operatesOn>
+      <ns0:Graph>
+        <ns0:hasMapping>
+          <ns0:Subject>
+            <rdf:type rdf:resource="http://localhost:8080/SW_project/cottagebooking#BookingServiceRequest"/>
+            <ns1:requestBookerName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:requestBookerName>
+            <ns1:requestPeopleCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requestPeopleCount>
+            <ns1:requestBedroomCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requestBedroomCount>
+            <ns1:requestMaxLakeDistance rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requestMaxLakeDistance>
+            <ns1:requestNearestCity rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:requestNearestCity>
+            <ns1:requestMaxCityDistance rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requestMaxCityDistance>
+            <ns1:requestDayCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requestDayCount>
+            <ns1:requestStartDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></ns1:requestStartDate>
+            <ns1:requestMaxDayShifts rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:requestMaxDayShifts>
+            <ns0:mapsTo>
+              <ns0:Object>
+                <rdf:type rdf:resource="http://localhost:8080/SW_project/cottagebooking#BookingServiceResponse"/>
+                <ns1:responseBookerName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:responseBookerName>
+                <ns1:responseBookingNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:responseBookingNumber>
+                <ns1:responseCottageAddress rdf:datatype="http://www.w3.org/2001/XMLSchema#string"> Lakeview Street, Jyvaskyla</ns1:responseCottageAddress>
+                <ns1:responseCottageImageUrl rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"></ns1:responseCottageImageUrl>
+                <ns1:responseNumberOfPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:responseNumberOfPlaces>
+                <ns1:responseNumberOfBedrooms rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:responseNumberOfBedrooms>
+                <ns1:responseDistanceToLake rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:responseDistanceToLake>
+                <ns1:responseNearestCity rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></ns1:responseNearestCity>
+                <ns1:responseDistanceToCity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"></ns1:responseDistanceToCity>
+                <ns1:responseBookingStartDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></ns1:responseBookingStartDate>
+                <ns1:responseBookingEndDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></ns1:responseBookingEndDate>
+              </ns0:Object>
+            </ns0:mapsTo>
+
+          </ns0:Subject>
+        </ns0:hasMapping>
+
+      </ns0:Graph>
+    </ns0:operatesOn>
+
+  </rdf:Description>
+
+</rdf:RDF>

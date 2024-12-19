@@ -1,0 +1,38 @@
+@prefix sswap: <http://sswapmeet.sswap.info/sswap/> .
+@prefix cb: <http://example.org/cottage-booking#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/cottage-booking/getCottages>
+    a <http://sswapmeet.sswap.info/sswap/Resource>, <http://example.org/cottage-booking/Cottage> ;
+    sswap:providedBy <http://example.org/cottage-booking/resourceProvider> ;
+    sswap:name "Cottage Booking Service" ;
+    sswap:oneLineDescription "A service that accepts booking criteria and returns available cottages." ;
+    sswap:operatesOn [
+        a sswap:Graph ;
+        sswap:hasMapping [
+            a sswap:Subject, <http://example.org/cottage-booking#BookingRequest> ;
+            cb:bookerName "" ;
+            cb:numberOfPeople ""^^xsd:integer ;
+            cb:numberOfBedrooms ""^^xsd:integer ;
+            cb:lakeDistance ""^^xsd:float ;
+            cb:city "" ;
+            cb:cityDistance ""^^xsd:float ;
+            cb:numberOfDays ""^^xsd:integer ;
+            cb:startDate ""^^xsd:date ;
+            cb:maxDateShift ""^^xsd:integer ;
+            sswap:mapsTo [
+                a sswap:Object, cb:BookingResponse ;
+                cb:bookingNumber "" ;
+                cb:bookerName "" ;
+                cb:city "" ;
+                cb:address "" ;
+                cb:imageUrl "" ;
+                cb:startDate ""^^xsd:date ;
+                cb:endDate ""^^xsd:date ;
+                cb:numberOfPeople ""^^xsd:integer ;
+                cb:numberOfBedrooms ""^^xsd:integer ;
+                cb:lakeDistance ""^^xsd:float ;
+                cb:cityDistance ""^^xsd:float
+            ]
+        ]
+    ] .

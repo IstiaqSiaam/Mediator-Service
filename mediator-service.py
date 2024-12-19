@@ -1,73 +1,154 @@
-# app.py
-
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, jsonify
 from flask_cors import CORS
 import requests
 from utils import get_rig_data, convert_rdf_to_jsonld, extract_suggestions
+from ontology_alignment import OntologyAligner
+import hashlib
 
 app = Flask(__name__)
 CORS(app)
 RDG_FILE = 'rdg_cache.xml'  # File to store the RDG
+aligner = OntologyAligner()
 
+def get_service_id(url):
+    """Generate a unique ID for a service based on its URL"""
+    return hashlib.md5(url.encode()).hexdigest()
 
 @app.route('/')
 def home():
-    return render_template('index.html') 
-
+    return render_template('index.html')
 
 @app.route('/get_rdg', methods=['POST'])
 def get_rdg():
     input_data = request.json
     remote_service_url = input_data.get('remote_service_url')
+    alignment_method = input_data.get('alignment_method', 'combined')  # 'custom', 'api', or 'combined'
 
     if not remote_service_url:
-        return Response("<error>remote_service_url is required</error>", status=400, mimetype='application/xml')
+        return Response("<e>remote_service_url is required<e>", status=400, mimetype='application/xml')
 
     try:
         rdg_response = requests.get(remote_service_url)
         rdg_response.raise_for_status()
+        
+        # Get service ID
+        service_id = get_service_id(remote_service_url)
+        
+        # Check if we already have alignment for this service
+        alignment = aligner.load_alignment(service_id)
+        if not alignment:
+            # Create new alignment using specified method
+            alignment = aligner.align_ontologies(
+                rdg_response.content,
+                open('reference_ontology.rdf').read(),
+                method=alignment_method
+            )
+            aligner.save_alignment(service_id, alignment)
+            
+            # If any alignments need confirmation, return them
+            needs_confirmation = [a for a in alignment if a['needs_confirmation']]
+            if needs_confirmation:
+                return jsonify({
+                    'status': 'needs_confirmation',
+                    'alignments': needs_confirmation,
+                    'service_id': service_id
+                })
+        
+        rdg_content = rdg_response.content.decode('utf-8')
+        if not rdg_content.strip():
+            return Response("<e>Received empty response from the remote service.<e>", status=500, mimetype='application/xml')
+
+        with open(RDG_FILE, 'wb') as file:
+            file.write(rdg_response.content)
+
+        return Response(rdg_response.content, status=rdg_response.status_code, mimetype='application/xml')
     except requests.exceptions.RequestException as e:
-        return Response(f"<error>{str(e)}</error>", status=500, mimetype='application/xml')
+        return Response(f"<e>{str(e)}<e>", status=500, mimetype='application/xml')
 
-    rdg_content = rdg_response.content.decode('utf-8')
-    # print("RDG Response Content:", rdg_content)
-
-    if not rdg_content.strip():
-        return Response("<error>Received empty response from the remote service.</error>", status=500, mimetype='application/xml')
-
-    with open(RDG_FILE, 'wb') as file:
-        file.write(rdg_response.content)
-
-    return Response(rdg_response.content, status=rdg_response.status_code, mimetype='application/xml')
-
+@app.route('/confirm_alignment', methods=['POST'])
+def confirm_alignment():
+    data = request.json
+    service_id = data.get('service_id')
+    confirmed_alignments = data.get('alignments')
+    
+    if not service_id or not confirmed_alignments:
+        return jsonify({'error': 'Missing service_id or alignments'}), 400
+        
+    # Load existing alignment
+    alignment = aligner.load_alignment(service_id)
+    if not alignment:
+        return jsonify({'error': 'No alignment found for this service'}), 404
+        
+    # Update alignment with confirmed mappings
+    for confirmed in confirmed_alignments:
+        for a in alignment:
+            if a['source_uri'] == confirmed['source_uri']:
+                a.update(confirmed)
+                a['needs_confirmation'] = False
+                
+    # Save updated alignment
+    aligner.save_alignment(service_id, alignment)
+    return jsonify({'status': 'success'})
 
 @app.route('/book_cottage', methods=['POST'])
 def book_cottage():
-    # Step 1: Receive input data from the client
     input_data = request.json
-    remote_service_url = "http://127.0.0.1:5001/cottages/search"
+    remote_service_url = input_data.get('remote_service_url', "http://127.0.0.1:5001/cottages/search")
+    service_id = get_service_id(remote_service_url)
 
-    # Validate input
     if not remote_service_url:
-        return Response("<error>remote_service_url is required</error>", status=400, mimetype='application/xml')
+        return Response("<e>remote_service_url is required<e>", status=400, mimetype='application/xml')
 
     try:
-        app.logger.info(f"----------input-data------------------")
-        data = get_rig_data(input_data)
-        app.logger.info(data)
-        rig_response = requests.post(remote_service_url, json=data, headers={"Content-Type": "application/rdf+xml"})
-        app.logger.info(f"---------------response------------------")
-        # app.logger.info(f"{rig_response.content}")
-        rrg_resp = convert_rdf_to_jsonld(rig_response.content)
-        formated_response = extract_suggestions(rrg_resp)
-
-        return {"response": formated_response, "status": "success"}
-        rig_response.raise_for_status()  # Raise an error for bad responses
+        # Load alignment for this service
+        alignment = aligner.load_alignment(service_id)
+        if not alignment:
+            return jsonify({'error': 'No alignment found for this service'}), 400
+            
+        # Transform input data using alignment
+        transformed_data = transform_data_using_alignment(input_data, alignment)
+        
+        # Send transformed data to remote service
+        response = requests.post(
+            f"{remote_service_url}/book",
+            json=transformed_data,
+            headers={'Content-Type': 'application/json'}
+        )
+        response.raise_for_status()
+        
+        # Transform response back using reverse alignment
+        transformed_response = transform_response_using_alignment(response.json(), alignment)
+        
+        return jsonify(transformed_response)
+        
     except requests.exceptions.RequestException as e:
-        return Response(f"<error>Failed to invoke remote service: {str(e)}</error>", status=500, mimetype='application/xml')
+        return Response(f"<e>{str(e)}<e>", status=500, mimetype='application/xml')
 
+def transform_data_using_alignment(data, alignment):
+    """Transform input data using ontology alignment"""
+    transformed = {}
+    alignment_map = {a['source_uri']: a['target_uri'] for a in alignment}
+    
+    for key, value in data.items():
+        if key in alignment_map:
+            transformed[alignment_map[key]] = value
+        else:
+            transformed[key] = value
+            
+    return transformed
 
-    # return Response(rig_response.content, status=rig_response.status_code, mimetype='application/xml')
+def transform_response_using_alignment(data, alignment):
+    """Transform response data using reverse ontology alignment"""
+    transformed = {}
+    alignment_map = {a['target_uri']: a['source_uri'] for a in alignment}
+    
+    for key, value in data.items():
+        if key in alignment_map:
+            transformed[alignment_map[key]] = value
+        else:
+            transformed[key] = value
+            
+    return transformed
 
 if __name__ == '__main__':
     app.run(debug=True)

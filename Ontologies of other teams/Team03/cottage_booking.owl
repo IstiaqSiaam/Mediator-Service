@@ -1,0 +1,198 @@
+@prefix : <http://localhost:8080/SW_project/cottagebooking#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://localhost:8080/SW_project/cottagebooking#> .
+
+<http://localhost:8080/SW_project/cottagebooking> rdf:type owl:Ontology .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://localhost:8080/SW_project/cottagebooking#hasCottage
+:hasCottage rdf:type owl:ObjectProperty ;
+            rdfs:domain :Booking ;
+            rdfs:range :Cottage .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#isLocatedAt
+:isLocatedAt rdf:type owl:ObjectProperty ;
+             rdfs:domain :Cottage ;
+             rdfs:range :Location .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#madeBy
+:madeBy rdf:type owl:ObjectProperty ;
+        rdfs:domain :Booking ;
+        rdfs:range :Booker .
+
+### hasMapping - relates a request to a response
+:hasMapping rdf:type owl:ObjectProperty .
+
+### mapsTo - defines mappings within a booking
+:mapsTo rdf:type owl:ObjectProperty .
+
+### operatesOn - defines the operation scope
+:operatesOn rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://localhost:8080/SW_project/cottagebooking#hasAddress
+:hasAddress rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Cottage ;
+            rdfs:range xsd:string .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasBookerName
+:hasBookerName rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Booker ;
+               rdfs:range xsd:string .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasBookingNumber
+:hasBookingNumber rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Booking ;
+                  rdfs:range xsd:string .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasCottageName
+:hasCottageName rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Cottage ;
+                rdfs:range xsd:string .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasDistanceFromCity
+:hasDistanceFromCity rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :Location ;
+                     rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasDistanceFromLake
+:hasDistanceFromLake rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :Cottage ;
+                     rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasEndDate
+:hasEndDate rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Booking ;
+            rdfs:range xsd:date .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasMaxNumberOfPeople
+:hasMaxNumberOfPeople rdf:type owl:DatatypeProperty ;
+                      rdfs:domain :Cottage ;
+                      rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasNearestCityName
+:hasNearestCityName rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Location ;
+                    rdfs:range xsd:string .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasNumberOfBedrooms
+:hasNumberOfBedrooms rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :Cottage ;
+                     rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasRequiredCityName
+:hasRequiredCityName rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :Booker ;
+                     rdfs:range xsd:string .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasRequiredMaxDistanceFromCity
+:hasRequiredMaxDistanceFromCity rdf:type owl:DatatypeProperty ;
+                                rdfs:domain :Booker ;
+                                rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasRequiredMaxDistanceFromLake
+:hasRequiredMaxDistanceFromLake rdf:type owl:DatatypeProperty ;
+                                rdfs:domain :Booker ;
+                                rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasRequiredNumberOfBedrooms
+:hasRequiredNumberOfBedrooms rdf:type owl:DatatypeProperty ;
+                             rdfs:domain :Booker ;
+                             rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasRequiredNumberOfDays
+:hasRequiredNumberOfDays rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :Booker ;
+                         rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasRequiredNumberOfPeople
+:hasRequiredNumberOfPeople rdf:type owl:DatatypeProperty ;
+                           rdfs:domain :Booker ;
+                           rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasRequiredStartDate
+:hasRequiredStartDate rdf:type owl:DatatypeProperty ;
+                      rdfs:domain :Booker ;
+                      rdfs:range xsd:date .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasShiftDays
+:hasShiftDays rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Booking ;
+              rdfs:range xsd:integer .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#hasStartDate
+:hasStartDate rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Booking ;
+              rdfs:range xsd:date .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://localhost:8080/SW_project/cottagebooking#Booker
+:Booker rdf:type owl:Class .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#Booking
+:Booking rdf:type owl:Class .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#Cottage
+:Cottage rdf:type owl:Class .
+
+
+###  http://localhost:8080/SW_project/cottagebooking#Location
+:Location rdf:type owl:Class .
+
+### BookingService Class
+:BookingService rdf:type owl:Class .
+
+### BookingServiceRequest Class
+:BookingServiceRequest rdf:type owl:Class .
+
+### BookingServiceResponse Class
+:BookingServiceResponse rdf:type owl:Class
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
+

@@ -1,0 +1,170 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix cb: <http://localhost:8080/SW_project/cottagebooking#> .
+
+# Cottages
+cb:cottage1 rdf:type cb:Cottage ;
+    cb:hasCottageName "Riihilinna Ski Lodge" ;
+    cb:hasMaxNumberOfPeople 4 ;
+    cb:hasNumberOfBedrooms 2 ;
+    cb:hasDistanceFromLake 100 ;
+    cb:hasAddress "123 Lakeview Street, Jyvaskyla" ;
+    cb:isLocatedAt cb:location1 .
+
+cb:cottage2 rdf:type cb:Cottage ;
+    cb:hasCottageName "Lakeside Haven" ;
+    cb:hasMaxNumberOfPeople 6 ;
+    cb:hasNumberOfBedrooms 3 ;
+    cb:hasDistanceFromLake 50 ;
+    cb:hasAddress "456 Woodland Avenue, Jyvaskyla" ;
+    cb:isLocatedAt cb:location1 .
+	
+cb:cottage3 rdf:type cb:Cottage ;
+    cb:hasCottageName "Villa Tammikko" ;
+    cb:hasMaxNumberOfPeople 6 ;
+    cb:hasNumberOfBedrooms 3 ;
+    cb:hasDistanceFromLake 300 ;
+    cb:hasAddress "456 Forest Drive, Helsinki" ;
+    cb:isLocatedAt cb:location2 .
+
+cb:cottage4 rdf:type cb:Cottage ;
+    cb:hasCottageName "Villa Gaia" ;
+    cb:hasMaxNumberOfPeople 8 ;
+    cb:hasNumberOfBedrooms 4 ;
+    cb:hasDistanceFromLake 500 ;
+    cb:hasAddress "789 Mountain Road, Tampere" ;
+    cb:isLocatedAt cb:location3 .
+
+cb:cottage5 rdf:type cb:Cottage ;
+    cb:hasCottageName "Tampere Cozy Retreat" ;
+    cb:hasMaxNumberOfPeople 12 ;
+    cb:hasNumberOfBedrooms 6 ;
+    cb:hasDistanceFromLake 200 ;
+    cb:hasAddress "789 Birch Road, Tampere" ;
+    cb:isLocatedAt cb:location3 .
+	
+cb:cottage6 rdf:type cb:Cottage ;
+    cb:hasCottageName "Cozy and Spacious Row House" ;
+    cb:hasMaxNumberOfPeople 5 ;
+    cb:hasNumberOfBedrooms 2 ;
+    cb:hasDistanceFromLake 200 ;
+    cb:hasAddress "101 River Street, Turku" ;
+    cb:isLocatedAt cb:location4 .
+
+cb:cottage rdf:type cb:Cottage ;
+    cb:hasCottageName "Mökki in Kalkkinen" ;
+    cb:hasMaxNumberOfPeople 10 ;
+    cb:hasNumberOfBedrooms 5 ;
+    cb:hasDistanceFromLake 50 ;
+    cb:hasAddress "202 Hilltop Lane, Lahti" ;
+    cb:isLocatedAt cb:location5 .
+	
+
+# Location details
+cb:location1 rdf:type cb:Location ;
+    cb:hasNearestCityName "Jyvaskyla" ;
+    cb:hasDistanceFromCity 10 .
+
+cb:location2 rdf:type cb:Location ;
+    cb:hasNearestCityName "Helsinki" ;
+    cb:hasDistanceFromCity 20 .
+
+cb:location3 rdf:type cb:Location ;
+    cb:hasNearestCityName "Tampere" ;
+    cb:hasDistanceFromCity 15 .
+
+cb:location4 rdf:type cb:Location ;
+    cb:hasNearestCityName "Turku" ;
+    cb:hasDistanceFromCity 25 .
+
+cb:location5 rdf:type cb:Location ;
+    cb:hasNearestCityName "Lahti" ;
+    cb:hasDistanceFromCity 5 .
+
+# Bookers
+cb:booker1 rdf:type cb:Booker ;
+	cb:hasBookerName "Alice" ;
+	cb:hasRequiredNumberOfPeople 4 ;
+	cb:hasRequiredNumberOfBedrooms 2 ;
+	cb:hasRequiredMaxDistanceFromLake 200 ;
+	cb:hasRequiredCityName "Jyvaskyla" ;
+	cb:hasRequiredMaxDistanceFromCity 15 ;
+	cb:hasRequiredNumberOfDays 3 ;
+	cb:hasRequiredStartDate "2024-11-05"^^xsd:date .
+	
+cb:booker2 rdf:type cb:Booker ;
+	cb:hasBookerName "Bob" ;
+	cb:hasRequiredNumberOfPeople 6 ;
+	cb:hasRequiredNumberOfBedrooms 3 ;
+	cb:hasRequiredMaxDistanceFromLake 300 ;
+	cb:hasRequiredCityName "Helsinki" ;
+	cb:hasRequiredMaxDistanceFromCity 20 ;
+	cb:hasRequiredNumberOfDays 5 ;
+	cb:hasRequiredStartDate "2024-11-10"^^xsd:date .
+	
+# Bookings
+cb:booking1 rdf:type cb:Booking ;
+	cb:hasBookingNumber "BKG001" ;
+	cb:hasStartDate "2024-11-05"^^xsd:date ;
+	cb:hasEndDate "2024-11-08"^^xsd:date ;
+	cb:hasCottage cb:cottage1 ;
+	cb:madeBy cb:booker1 .
+	
+cb:booking2 rdf:type cb:Booking ;
+	cb:hasBookingNumber "BKG002" ;
+	cb:hasStartDate "2024-11-10"^^xsd:date ;
+	cb:hasEndDate "2024-11-15"^^xsd:date ;
+	cb:hasCottage cb:cottage3 ;
+	cb:madeBy cb:booker2 .
+	
+cb:booking3 rdf:type cb:Booking ;
+	cb:hasBookingNumber "BKG003" ;
+	cb:hasStartDate "2024-12-01"^^xsd:date ;
+	cb:hasEndDate "2024-12-04"^^xsd:date ;
+	cb:hasCottage cb:cottage4 ;
+	cb:madeBy cb:booker1 .
+
+# BookingService Definition
+cb:bookingService rdf:type cb:BookingService ;
+    cb:serviceName "Cottage booking service" ;
+    cb:serviceDescription "A service to fetch bookable cottages" ;
+    cb:providedBy "http://localhost:8080/sswapbooking/resourceProvider" .
+
+# BookingServiceRequest Example
+cb:bookingServiceRequest1 rdf:type cb:BookingServiceRequest ;
+   cb:hasBookerName "Alice" ;
+   cb:cityDistance 10^^xsd:int ;
+   cb:days 3^^xsd:int ;
+   cb:hasBedrooms 2^^xsd:int ;
+   cb:hasBeds 4^^xsd:int ;
+   cb:lakeDistance 200^^xsd:int ;
+   cb:maxShiftDays 1^^xsd:int ;
+   cb:nearestCity "Jyvaskyla" ;
+   cb:startsAt "2024-11-05T00:00:00"^^xsd:dateTime .
+
+# BookingServiceResponse Example
+cb:bookingServiceResponse1 rdf:type cb:BookingServiceResponse ;
+   cb:hasBookerName "Alice" ;
+   cb:cityDistance 10^^xsd:int ;
+   cb:hasBedrooms 2^^xsd:int ;
+   cb:hasBeds 4^^xsd:int ;
+   cb:lakeDistance 200^^xsd:int ;
+   cb:startsAt "2024-11-05T00:00:00"^^xsd:dateTime ;
+   cb:endsAt "2024-11-08T00:00:00"^^xsd:dateTime ;
+   cb:nearestCity "Jyvaskyla" ;
+   cb:hasCottageAddress "123 Lakeview Street, Jyvaskyla" ;
+   cb:hasBookingNumber "BKG001" .
+
+cb:bookingServiceResponse2 rdf:type cb:BookingServiceResponse ;
+   cb:hasBookerName "Alice" ;
+   cb:cityDistance 12^^xsd:int ;
+   cb:hasBedrooms 3^^xsd:int ;
+   cb:hasBeds 5^^xsd:int ;
+   cb:lakeDistance 150^^xsd:int ;
+   cb:startsAt "2024-11-05T00:00:00"^^xsd:dateTime ;
+   cb:endsAt "2024-11-08T00:00:00"^^xsd:dateTime ;
+   cb:nearestCity "Jyvaskyla" ;
+   cb:hasCottageAddress "789 Mountain Road, Tampere" ;
+   cb:hasBookingNumber "BKG002" .

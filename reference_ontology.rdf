@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:cb="http://localhost:8080/CottageBookingService/ontology#">
+
+    <!-- Classes -->
+    <owl:Class rdf:about="http://localhost:8080/CottageBookingService/ontology#Booking">
+        <rdfs:label>Booking</rdfs:label>
+    </owl:Class>
+
+    <owl:Class rdf:about="http://localhost:8080/CottageBookingService/ontology#Cottage">
+        <rdfs:label>Cottage</rdfs:label>
+    </owl:Class>
+
+    <owl:Class rdf:about="http://localhost:8080/CottageBookingService/ontology#City">
+        <rdfs:label>City</rdfs:label>
+    </owl:Class>
+
+    <!-- Properties -->
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#bookerName">
+        <rdfs:label>bookerName</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#requiredPlaces">
+        <rdfs:label>requiredPlaces</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#requiredBedrooms">
+        <rdfs:label>requiredBedrooms</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#maxDistanceToLake">
+        <rdfs:label>maxDistanceToLake</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#nearestCity">
+        <rdfs:label>nearestCity</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://localhost:8080/CottageBookingService/ontology#City"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#maxDistanceToCity">
+        <rdfs:label>maxDistanceToCity</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#startDate">
+        <rdfs:label>startDate</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#requiredDays">
+        <rdfs:label>requiredDays</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="http://localhost:8080/CottageBookingService/ontology#maxShiftDays">
+        <rdfs:label>maxShiftDays</rdfs:label>
+        <rdfs:domain rdf:resource="http://localhost:8080/CottageBookingService/ontology#Booking"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+</rdf:RDF>

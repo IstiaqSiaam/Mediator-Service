@@ -1,0 +1,19 @@
+@prefix sswap: <http://sswapmeet.sswap.info/sswap/> .
+@prefix cb: <http://example.org/cottage-booking#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/cottage-booking/getCottages/invoke>
+    a sswap:Invocation ;
+    sswap:invokes <http://example.org/cottage-booking/getCottages> ;
+    sswap:mapsTo [
+        a cb:BookingRequest ;
+        cb:bookerName "John Doe" ;
+        cb:numberOfPeople 4 ;
+        cb:numberOfBedrooms 2 ;
+        cb:lakeDistance 100.0^^xsd:float ;
+        cb:city "Jyvaskyla" ;
+        cb:cityDistance 10.0^^xsd:float ;
+        cb:numberOfDays 7 ;
+        cb:startDate "2024-12-15"^^xsd:date ;
+        cb:maxDateShift 2
+    ] .

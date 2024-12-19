@@ -1,4 +1,7 @@
 flask
-rdflib
-requests
 flask-cors
+requests
+rdflib
+numpy
+textdistance
+nltk

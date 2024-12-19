@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rdf:RDF
+    xmlns:sswap="http://sswapmeet.sswap.info/sswap/"
+    xmlns:cb="http://example.org/cottage-booking#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <sswap:Resource rdf:about="http://example.org/cottage-booking/getCottages">
+        <rdf:type rdf:resource="http://example.org/cottage-booking/CottageBookingService" />
+        <sswap:providedBy rdf:resource="http://example.org/cottage-booking/resourceProvider" />
+        <sswap:name>Cottage Booking Service</sswap:name>
+        <sswap:oneLineDescription>A service that accepts booking criteria and returns available cottages with booking options</sswap:oneLineDescription>
+        <sswap:operatesOn>
+            <sswap:Graph>
+                <sswap:hasMapping>
+                    <sswap:Subject>
+                        <rdf:type rdf:resource="http://example.org/cottage-booking#BookingRequest" />
+                        <cb:bookerName>Besher</cb:bookerName>
+                        <cb:minNumberOfPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:minNumberOfPlaces>
+                        <cb:minNumberOfBedrooms rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:minNumberOfBedrooms>
+                        <cb:maxDistanceFromLake rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">600.0</cb:maxDistanceFromLake>
+                        <cb:hasClosestCityName>Jyväskylä</cb:hasClosestCityName>
+                        <cb:maxDistanceFromCity rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15000.0</cb:maxDistanceFromCity>
+                        <cb:hasNumberOfDays rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:hasNumberOfDays>
+                        <cb:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-12-01</cb:startDate>
+                        <cb:hasMaxDayShift rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:hasMaxDayShift>
+                        <sswap:mapsTo>
+                            <sswap:Object>
+                                <rdf:type rdf:resource="http://example.org/cottage-booking#BookingResponse" />
+                                <cb:bookingNumber>BK8926</cb:bookingNumber>
+                                <cb:bookerName>Besher</cb:bookerName>
+                                <cb:hasClosestCityName>Jyväskylä</cb:hasClosestCityName>
+                                <cb:address>Järvikuja 8, 41310 Leppävesi</cb:address>
+                                <cb:hasImageURL>https://images.unsplash.com/photo-1587061949409-02df41d5e562</cb:hasImageURL>
+                                <cb:startDate>2024-12-01</cb:startDate>
+                                <cb:endDate>2024-12-02</cb:endDate>
+                                <cb:numberOfPlaces>4</cb:numberOfPlaces>
+                                <cb:numberOfBedrooms>2</cb:numberOfBedrooms>
+                                <cb:distanceFromLake>30.0</cb:distanceFromLake>
+                                <cb:distanceFromCity>8500.0</cb:distanceFromCity>
+                            </sswap:Object>
+                            <sswap:Object>
+                                <rdf:type rdf:resource="http://example.org/cottage-booking#BookingResponse" />
+                                <cb:bookingNumber>BK5630</cb:bookingNumber>
+                                <cb:bookerName>Besher</cb:bookerName>
+                                <cb:hasClosestCityName>Jyväskylä</cb:hasClosestCityName>
+                                <cb:address>Rantatie 15, 40700 Jyväskylä</cb:address>
+                                <cb:hasImageURL>https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8</cb:hasImageURL>
+                                <cb:startDate>2024-12-01</cb:startDate>
+                                <cb:endDate>2024-12-02</cb:endDate>
+                                <cb:numberOfPlaces>8</cb:numberOfPlaces>
+                                <cb:numberOfBedrooms>4</cb:numberOfBedrooms>
+                                <cb:distanceFromLake>50.0</cb:distanceFromLake>
+                                <cb:distanceFromCity>12000.0</cb:distanceFromCity>
+                            </sswap:Object>
+                        </sswap:mapsTo>
+                    </sswap:Subject>
+                </sswap:hasMapping>
+            </sswap:Graph>
+        </sswap:operatesOn>
+    </sswap:Resource>
+</rdf:RDF>

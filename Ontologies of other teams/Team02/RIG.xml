@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:cb="http://example.org/cottage-booking#"
+    xmlns:sswap="http://sswapmeet.sswap.info/sswap/">
+    <sswap:Resource rdf:about="http://example.org/cottage-booking/getCottages">
+        <rdf:type rdf:resource="http://example.org/cottage-booking/CottageBookingService"></rdf:type>
+        <sswap:providedBy rdf:resource="http://example.org/cottage-booking/resourceProvider"></sswap:providedBy>
+        <sswap:name>Cottage Booking Service</sswap:name>
+        <sswap:oneLineDescription>A service that accepts booking criteria and returns available cottages with booking options</sswap:oneLineDescription>
+        <sswap:operatesOn>
+            <sswap:Graph>
+                <sswap:hasMapping>
+                    <sswap:Subject>
+                        <rdf:type rdf:resource="http://example.org/cottage-booking#BookingRequest"></rdf:type>
+                        <cb:bookerName>Besher</cb:bookerName>
+                        <cb:minNumberOfPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:minNumberOfPlaces>
+                        <cb:minNumberOfBedrooms rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:minNumberOfBedrooms>
+                        <cb:maxDistanceFromLake rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">600</cb:maxDistanceFromLake>
+                        <cb:hasClosestCityName>Jyväskylä</cb:hasClosestCityName>
+                        <cb:maxDistanceFromCity rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15000</cb:maxDistanceFromCity>
+                        <cb:hasNumberOfDays rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:hasNumberOfDays>
+                        <cb:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-12-01</cb:startDate>
+                        <cb:hasMaxDayShift rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger">1</cb:hasMaxDayShift>
+                        <sswap:mapsTo>
+                            <sswap:Object>
+                                <rdf:type rdf:resource="http://example.org/cottage-booking#BookingResponse"></rdf:type>
+                                <cb:bookingNumber></cb:bookingNumber>
+                                <cb:bookerName></cb:bookerName>
+                                <cb:hasClosestCityName></cb:hasClosestCityName>
+                                <cb:address></cb:address>
+                                <cb:hasImageURL></cb:hasImageURL>
+                                <cb:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></cb:startDate>
+                                <cb:endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"></cb:endDate>
+                                <cb:numberOfPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"></cb:numberOfPlaces>
+                                <cb:numberOfBedrooms rdf:datatype="http://www.w3.org/2001/XMLSchema#positiveInteger"></cb:numberOfBedrooms>
+                                <cb:distanceFromLake rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"></cb:distanceFromLake>
+                                <cb:distanceFromCity rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"></cb:distanceFromCity>
+                            </sswap:Object>
+                        </sswap:mapsTo>
+                    </sswap:Subject>
+                </sswap:hasMapping>
+            </sswap:Graph>
+        </sswap:operatesOn>
+    </sswap:Resource>
+</rdf:RDF>
